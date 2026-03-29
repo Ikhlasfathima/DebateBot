@@ -291,7 +291,7 @@ h1 {{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-size: 2.8rem !important;
+    font-size: 2rem !important;
     letter-spacing: 2px;
     margin-bottom: 0 !important;
 }}
@@ -317,7 +317,7 @@ h2, h3 {{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }}
@@ -491,7 +491,7 @@ h2, h3 {{
 
 .stChatInput {{
     border-radius: 16px !important;
-    position: sticky;
+    # position: sticky;
     bottom: 0;
     background: transparent !important;
     padding-top: 10px;
@@ -539,7 +539,7 @@ hr {{
 /* Intro hero section */
 .hero-section {{
     text-align: center;
-    padding: 2rem 0 1rem;
+    padding: 1rem 0 0.5rem;
 }}
 
 .hero-tagline {{
@@ -566,7 +566,7 @@ hr {{
 
 /* Scrollable chat area */
 .chat-container {{
-    max-height: 480px;
+    max-height: 300px;
     overflow-y: auto;
     padding: 0.5rem;
     scrollbar-width: thin;
