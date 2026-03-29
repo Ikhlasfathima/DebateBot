@@ -8,7 +8,7 @@ model = genai.GenerativeModel('gemini-2.5-flash')
 
 # ------------------ PAGE CONFIG ------------------
 st.set_page_config(
-    page_title="⚔️ Debate Bot",
+    page_title="Debate Bot",
     page_icon="⚔️",
     layout="centered"
 )
@@ -34,7 +34,7 @@ if st.session_state.chat is None and st.session_state.personality:
 # ------------------ PERSONALITY DATA ------------------
 PERSONALITIES = {
     "Calm 🧘": {
-        "label": "Calm",
+        "label": "Chill Sage",
         "emoji": "🧘",
         "bot_icon": "🌊",
         "user_icon": "🌿",
@@ -79,7 +79,7 @@ PERSONALITIES = {
         "effects": "waves",
     },
     "Aggressive 🔥": {
-        "label": "Aggressive",
+        "label": "Riot Core",
         "emoji": "🔥",
         "bot_icon": "🐉",
         "user_icon": "⚡",
@@ -124,7 +124,7 @@ PERSONALITIES = {
         "effects": "sparks",
     },
     "Sarcastic 😏": {
-        "label": "Sarcastic",
+        "label": "Witty Rebel",
         "emoji": "😏",
         "bot_icon": "🎭",
         "user_icon": "🃏",
@@ -169,7 +169,7 @@ PERSONALITIES = {
         "effects": "stars",
     },
     "Logical 🧠": {
-        "label": "Logical",
+        "label": "Cortex Prime",
         "emoji": "🧠",
         "bot_icon": "🤖",
         "user_icon": "💡",
@@ -584,7 +584,7 @@ hr {{
 def show_personality_select(t, meta):
     st.markdown(f"""
     <div class="hero-section">
-        <h1>⚔️ Debate Bot</h1>
+        <h1>⚔️ KarenTalks</h1>
         <p class="hero-tagline">Choose your opponent. Face the challenge. Win the argument.</p>
     </div>
     """, unsafe_allow_html=True)
