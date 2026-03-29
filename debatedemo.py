@@ -280,7 +280,7 @@ html, body, [class*="css"] {{
 
 /* Main content */
 .block-container {{
-    padding: 1.5rem 2rem !important;
+    padding: 1rem 1.5rem !important;
     max-width: 820px !important;
 }}
 
@@ -481,6 +481,7 @@ h2, h3 {{
 
 /* Chat input */
 .stChatInput textarea, .stChatInput input {{
+    height: 50px !important;
     background: {t['card']} !important;
     border: 1px solid {t['border']} !important;
     border-radius: 16px !important;
@@ -490,7 +491,13 @@ h2, h3 {{
 
 .stChatInput {{
     border-radius: 16px !important;
+    position: sticky;
+    bottom: 0;
+    background: transparent !important;
+    padding-top: 10px;
+
 }}
+
 
 /* Success / error */
 .stSuccess {{
@@ -657,9 +664,14 @@ def render_messages(t, meta):
                 <div class="bubble-header"><span class="bubble-icon">{bot_icon}</span> {meta['label']}</div>
                 <div class="bubble-text">{msg['content']}</div>
             </div>"""
-
+    if not st.session_state.messages:
+        st.markdown(
+            "<p style='text-align:center; color:gray;'>Start the debate by typing below 👇</p>",
+            unsafe_allow_html=True
+        )
     if chat_html:
         st.markdown(f'<div class="chat-container">{chat_html}</div>', unsafe_allow_html=True)
+  
 
 
 # ------------------ SCOREBOARD ------------------
@@ -798,6 +810,7 @@ render_scoreboard(t, meta)
 st.markdown("<hr>", unsafe_allow_html=True)
 
 render_messages(t, meta)
+st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 # ---- CHAT INPUT ----
 user_input = st.chat_input(f"Make your argument against {meta['label']}...")
