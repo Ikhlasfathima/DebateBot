@@ -480,22 +480,32 @@ h2, h3 {{
 }}
 
 /* Chat input */
-.stChatInput textarea, .stChatInput input {{
-    height: 50px !important;
-    background: {t['card']} !important;
-    border: 1px solid {t['border']} !important;
-    border-radius: 16px !important;
-    color: {t['text']} !important;
-    font-family: {t['font_body']} !important;
+div[data-testid="stChatInput"] {{
+    margin-top: 0.75rem;
 }}
 
-.stChatInput {{
-    border-radius: 16px !important;
-    # position: sticky;
-    bottom: 0;
-    background: transparent !important;
-    padding-top: 10px;
+div[data-testid="stChatInput"] > div {{
+    background: {t['card']} !important;
+    border: 1px solid {t['border']} !important;
+    border-radius: 18px !important;
+    padding: 0.35rem !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}}
 
+div[data-testid="stChatInput"] textarea,
+div[data-testid="stChatInput"] input {{
+    min-height: 52px !important;
+    background: transparent !important;
+    border: none !important;
+    color: {t['text']} !important;
+    font-family: {t['font_body']} !important;
+    box-shadow: none !important;
+}}
+
+div[data-testid="stChatInput"] textarea::placeholder,
+div[data-testid="stChatInput"] input::placeholder {{
+    color: {t['subtext']} !important;
+    opacity: 0.9;
 }}
 
 
