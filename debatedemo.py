@@ -8,7 +8,7 @@ model = genai.GenerativeModel('gemini-2.5-flash')
 
 # ------------------ PAGE CONFIG ------------------
 st.set_page_config(
-    page_title="Debate Bot",
+    page_title="KarenTalks",
     page_icon="⚔️",
     layout="wide"
 )
@@ -232,43 +232,24 @@ def get_theme():
 
 # ------------------ INJECT CSS ------------------
 def inject_css(t, meta):
-    google_fonts = "@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Abril+Fatface&family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@300;400;600&family=Lato:wght@300;400;700&display=swap');"
+    google_fonts = "@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Playfair+Display:wght@400;700&family=Abril+Fatface&family=Orbitron:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&family=Rajdhani:wght@400;600;700&family=DM+Sans:wght@300;400;600&family=Lato:wght@300;400;700&display=swap');"
 
     st.markdown(f"""
 <style>
 {google_fonts}
 
-[data-testid="stAppViewContainer"] {{
-    background: linear-gradient(135deg, #0d1b2a, #0a2535, #0d2040);
-}}
-
-[data-testid="stHeader"] {{
-    background: transparent;
-}}
-
-[data-testid="stToolbar"] {{
-    right: 2rem;
-}}
-
-/* FORCE EVERYTHING DARK */
-html, body, .stApp {{
-    background: linear-gradient(135deg, #0d1b2a 0%, #0a2535 50%, #0d2040 100%) !important;
-}}
-
-html, body, [class*="css"] {{
-    font-family: {t['font_body']};
-    background-color: {t['bg']} !important;
-    color: {t['text']} !important;
-}}
-
-.stApp {{
+/* ===== BASE RESET ===== */
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"],
+section.main,
+.block-container {{
     background: {t['gradient']} !important;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    color: {t['text']} !important;
+    font-family: {t['font_body']};
 }}
 
-/* Orb background effects */
+/* ===== AMBIENT ORBS ===== */
 .stApp::before {{
     content: '';
     position: fixed;
@@ -282,7 +263,6 @@ html, body, [class*="css"] {{
     pointer-events: none;
     z-index: 0;
 }}
-
 .stApp::after {{
     content: '';
     position: fixed;
@@ -297,41 +277,106 @@ html, body, [class*="css"] {{
     z-index: 0;
 }}
 
-/* Main content */
+/* ===== HEADER & TOOLBAR ===== */
+[data-testid="stHeader"] {{ background: transparent !important; }}
+[data-testid="stToolbar"] {{ right: 2rem; }}
+
+/* ===== MAIN CONTENT PADDING ===== */
 .block-container {{
-    padding-bottom: 0rem !important;
-    background: transparent !important;
-}}
-[data-testid="stMain"] {{
+    padding-top: 1.5rem !important;
+    padding-bottom: 1rem !important;
     background: transparent !important;
 }}
 
+/* ===== BOTTOM INPUT AREA — single clean rule set ===== */
+[data-testid="stBottomBlockContainer"] {{
+    background: {t['bg']} !important;
+    border-top: 1px solid {t['border']} !important;
+    box-shadow: 0 -8px 24px rgba(0,0,0,0.18) !important;
+    padding: 0.5rem 1rem 0.75rem !important;
+}}
+[data-testid="stBottomBlockContainer"] > div,
+[data-testid="stBottomBlockContainer"] > div > div {{
+    background: transparent !important;
+}}
 
-/* Title */
+/* ===== CHAT INPUT WIDGET ===== */
+div[data-testid="stChatInput"] > div {{
+    background: {t['card']} !important;
+    border: 1px solid {t['border']} !important;
+    border-radius: 18px !important;
+    padding: 0.3rem 0.5rem !important;
+    box-shadow: none !important;
+}}
+div[data-testid="stChatInput"] textarea,
+div[data-testid="stChatInput"] input,
+div[data-testid="stChatInput"] > div textarea,
+div[data-testid="stChatInput"] > div input,
+[data-testid="stChatInput"] textarea,
+[data-testid="stChatInput"] div textarea {{
+    background: {t['card']} !important;
+    background-color: {t['card']} !important;
+    border: none !important;
+    color: {t['text']} !important;
+    font-family: {t['font_body']} !important;
+    box-shadow: none !important;
+    min-height: 44px !important;
+    -webkit-text-fill-color: {t['text']} !important;
+    caret-color: {t['accent']} !important;
+}}
+div[data-testid="stChatInput"] textarea::placeholder,
+div[data-testid="stChatInput"] input::placeholder {{
+    color: {t['subtext']} !important;
+    opacity: 1;
+    -webkit-text-fill-color: {t['subtext']} !important;
+}}
+/* Send button inside chat input */
+div[data-testid="stChatInput"] button {{
+    background: {t['header_grad']} !important;
+    border: none !important;
+    border-radius: 50% !important;
+    color: {t['bg']} !important;
+}}
+
+/* ===== TYPOGRAPHY ===== */
 h1 {{
-    font-family: {t['font_display']} !important;
+    font-family: 'Cinzel', serif !important;
     background: {t['header_grad']};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    font-size: 2rem !important;
-    letter-spacing: 2px;
+    font-size: 2.4rem !important;
+    letter-spacing: 4px;
     margin-bottom: 0 !important;
+    text-align: center;
 }}
-
 h2, h3 {{
     font-family: {t['font_display']} !important;
     color: {t['accent']} !important;
 }}
 
-/* Toggle button */
-.toggle-bar {{
-    display: flex;
-    justify-content: flex-end;
+/* ===== PAGE HEADER ===== */
+.page-header {{
+    text-align: center;
+    padding: 2rem 0 0.8rem;
     margin-bottom: 0.5rem;
 }}
+.page-header-icon {{
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+}}
+.page-header-subtitle {{
+    font-family: {t['font_body']};
+    color: {t['subtext']};
+    font-size: 1rem;
+    font-style: italic;
+    margin: 0.4rem 0 0;
+    letter-spacing: 0.5px;
+}}
 
-/* Scoreboard card */
+/* ===== SCORE CARD ===== */
 .score-card {{
     background: {t['card']};
     border: 1px solid {t['border']};
@@ -342,28 +387,20 @@ h2, h3 {{
     justify-content: space-between;
     margin: 0.5rem 0;
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }}
-
-.score-item {{
-    text-align: center;
-    flex: 1;
-}}
-
+.score-item {{ text-align: center; flex: 1; }}
 .score-number {{
     font-family: {t['font_display']};
     font-size: 2.2rem;
     color: {t['accent']};
     line-height: 1;
 }}
-
 .score-label {{
     font-size: 0.75rem;
     color: {t['subtext']};
     letter-spacing: 1px;
     text-transform: uppercase;
 }}
-
 .score-vs {{
     font-family: {t['font_display']};
     font-size: 1.4rem;
@@ -371,7 +408,7 @@ h2, h3 {{
     padding: 0 1rem;
 }}
 
-/* Round badge */
+/* ===== ROUND BADGE ===== */
 .round-badge {{
     background: {t['accent']};
     color: {t['bg']};
@@ -384,7 +421,7 @@ h2, h3 {{
     margin: 0.3rem 0;
 }}
 
-/* Chat bubbles */
+/* ===== CHAT BUBBLES ===== */
 .chat-bubble-user {{
     background: {t['user_bubble']};
     border: 1px solid {t['border']};
@@ -392,9 +429,7 @@ h2, h3 {{
     padding: 0.8rem 1.1rem;
     margin: 0.6rem 0 0.6rem 2rem;
     position: relative;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }}
-
 .chat-bubble-bot {{
     background: {t['bot_bubble']};
     border: 1px solid {t['border']};
@@ -402,9 +437,7 @@ h2, h3 {{
     padding: 0.8rem 1.1rem;
     margin: 0.6rem 2rem 0.6rem 0;
     position: relative;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
 }}
-
 .bubble-header {{
     font-size: 0.72rem;
     color: {t['subtext']};
@@ -413,68 +446,58 @@ h2, h3 {{
     text-transform: uppercase;
     font-weight: 600;
 }}
-
-.bubble-icon {{
-    font-size: 1.5rem;
-    margin-right: 0.4rem;
-}}
-
+.bubble-icon {{ font-size: 1.5rem; margin-right: 0.4rem; }}
 .bubble-text {{
     color: {t['text']};
     font-family: {t['font_body']};
     line-height: 1.6;
 }}
 
-/* Personality card on selection screen */
+/* ===== CHAT SCROLL AREA ===== */
+.chat-container {{
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: {t['border']} transparent;
+}}
+
+/* ===== PERSONALITY CARDS ===== */
 .personality-card {{
     background: {t['card']};
     border: 2px solid {t['border']};
     border-radius: 20px;
     padding: 1.5rem;
     text-align: center;
-    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }}
-
-.personality-card:hover {{
-    border-color: {t['accent']};
-    transform: translateY(-4px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-}}
-
 .personality-card.selected {{
     border-color: {t['accent']};
     background: linear-gradient(135deg, {t['card']}, {t['bg2']});
 }}
-
 .char-emoji {{
     font-size: 3.5rem;
     display: block;
     margin-bottom: 0.5rem;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }}
-
 .char-name {{
     font-family: {t['font_display']};
     font-size: 1.3rem;
     color: {t['accent']};
     margin-bottom: 0.2rem;
 }}
-
 .char-tagline {{
     font-size: 0.8rem;
     color: {t['subtext']};
     font-style: italic;
 }}
-
 .char-desc {{
     font-size: 0.75rem;
     color: {t['subtext']};
     margin-top: 0.5rem;
 }}
 
-/* Streamlit buttons */
+/* ===== STREAMLIT BUTTONS ===== */
 .stButton > button {{
     background: {t['header_grad']} !important;
     color: {t['bg']} !important;
@@ -485,16 +508,13 @@ h2, h3 {{
     letter-spacing: 1px !important;
     padding: 0.6rem 2rem !important;
     transition: all 0.2s ease !important;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
 }}
-
 .stButton > button:hover {{
     transform: translateY(-2px) !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3) !important;
     opacity: 0.9 !important;
 }}
 
-/* Selectbox */
+/* ===== SELECTBOX ===== */
 .stSelectbox > div > div {{
     background: {t['card']} !important;
     border: 1px solid {t['border']} !important;
@@ -502,88 +522,8 @@ h2, h3 {{
     color: {t['text']} !important;
 }}
 
-/* Chat input */
-div[data-testid="stChatInput"] {{
-    margin-top: 0.75rem;
-}}
+/* ===== MISC ===== */
 
-div[data-testid="stChatInput"] > div {{
-    background: {t['card']} !important;
-    border: 1px solid {t['border']} !important;
-    border-radius: 18px !important;
-    padding: 0.35rem !important;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-}}
-
-div[data-testid="stChatInput"] textarea,
-div[data-testid="stChatInput"] input {{
-    min-height: 52px !important;
-    background: transparent !important;
-    border: none !important;
-    color: {t['text']} !important;
-    font-family: {t['font_body']} !important;
-    box-shadow: none !important;
-}}
-
-div[data-testid="stChatInput"] textarea::placeholder,
-div[data-testid="stChatInput"] input::placeholder {{
-    color: {t['subtext']} !important;
-    opacity: 0.9;
-}}
-
-
-/* Success / error */
-.stSuccess {{
-    background: rgba(126, 202, 195, 0.15) !important;
-    border-color: {t['accent']} !important;
-    border-radius: 12px !important;
-}}
-
-/* Feedback section */
-.feedback-card {{
-    background: {t['card']};
-    border: 1px solid {t['border']};
-    border-radius: 16px;
-    padding: 1.5rem;
-    margin-top: 1rem;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}}
-
-/* Divider */
-hr {{
-    border-color: {t['border']} !important;
-    margin: 1rem 0 !important;
-}}
-
-/* Caption / subtext */
-.stCaption, small, .element-container p small {{
-    color: {t['subtext']} !important;
-    font-family: {t['font_body']} !important;
-}}
-
-/* Expanders */
-.streamlit-expanderHeader {{
-    background: {t['card']} !important;
-    border-radius: 12px !important;
-    color: {t['text']} !important;
-    font-family: {t['font_display']} !important;
-}}
-
-/* Intro hero section */
-.hero-section {{
-    text-align: center;
-    padding: 1rem 0 0.5rem;
-}}
-
-.hero-tagline {{
-    font-family: {t['font_display']};
-    color: {t['subtext']};
-    font-size: 1.1rem;
-    font-style: italic;
-    margin: 0.5rem 0 2rem;
-}}
-
-/* Personality badge in header */
 .personality-badge {{
     display: inline-flex;
     align-items: center;
@@ -596,46 +536,24 @@ hr {{
     color: {t['subtext']};
     margin-bottom: 0.5rem;
 }}
-
-/* Scrollable chat area */
-.chat-container {{
-    max-height: 300px;
-    overflow-y: auto;
-    padding: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: {t['border']} transparent;
+.feedback-card {{
+    background: {t['card']};
+    border: 1px solid {t['border']};
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+}}
+hr {{ border-color: {t['border']} !important; margin: 1rem 0 !important; }}
+.stProgress > div > div {{ background: {t['header_grad']} !important; }}
+.stCaption, small {{ color: {t['subtext']} !important; }}
+.streamlit-expanderHeader {{
+    background: {t['card']} !important;
+    border-radius: 12px !important;
+    color: {t['text']} !important;
 }}
 
-/* Hide Streamlit branding */
-#MainMenu, footer, header {{
-    visibility: hidden;
-}}
-
-/* Progress bar */
-.stProgress > div > div {{
-    background: {t['header_grad']} !important;
-}}
-
-/* FIX BOTTOM WHITE SPACE COMPLETELY */
-[data-testid="stBottomBlockContainer"] {{
-    background: transparent !important;
-}}
-
-section[data-testid="stSidebar"] {{
-    background: transparent !important;
-}}
-
-/* Fix chat input outer wrapper */
-[data-testid="stChatInputContainer"] {{
-    background: transparent !important;
-    border-top: none !important;
-}}
-
-/* Remove extra page padding */
-.main > div {{
-    padding-bottom: 0rem !important;
-}}
-
+/* ===== HIDE STREAMLIT CHROME ===== */
+#MainMenu, footer {{ visibility: hidden; }}
 </style>
 """, unsafe_allow_html=True)
 
@@ -643,9 +561,10 @@ section[data-testid="stSidebar"] {{
 # ------------------ PERSONALITY SELECTION SCREEN ------------------
 def show_personality_select(t, meta):
     st.markdown(f"""
-    <div class="hero-section">
-        <h1>⚔️ KarenTalks</h1>
-        <p class="hero-tagline">Choose your opponent. Face the challenge. Win the argument.</p>
+    <div class="page-header">
+        <span class="page-header-icon">⚖️</span>
+        <h1>KarenTalks</h1>
+        <p class="page-header-subtitle">Choose your opponent. Face the challenge. Win the argument.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -656,13 +575,11 @@ def show_personality_select(t, meta):
 
     for i, key in enumerate(personality_keys):
         p_meta = PERSONALITIES[key]
-        mode = "dark" if st.session_state.dark_mode else "light"
-        p_theme = p_meta[mode]
         selected_class = "selected" if selected == key else ""
 
         with cols[i % 2]:
             st.markdown(f"""
-            <div class="personality-card {selected_class}" onclick="">
+            <div class="personality-card {selected_class}">
                 <span class="char-emoji">{p_meta['bot_icon']}</span>
                 <div class="char-name">{p_meta['label']}</div>
                 <div class="char-tagline">"{p_meta['tagline']}"</div>
@@ -724,7 +641,6 @@ def render_messages(t, meta):
         )
     if chat_html:
         st.markdown(f'<div class="chat-container">{chat_html}</div>', unsafe_allow_html=True)
-  
 
 
 # ------------------ SCOREBOARD ------------------
@@ -770,17 +686,14 @@ def render_toggle():
 
 # ------------------ MAIN APP ------------------
 
-# Always resolve theme first
 if st.session_state.personality:
     t, meta = get_theme()
 else:
-    # Use calm dark as default for selection screen
     t = PERSONALITIES["Calm 🧘"]["dark" if st.session_state.dark_mode else "light"]
     meta = PERSONALITIES["Calm 🧘"]
 
 inject_css(t, meta)
 
-# Toggle
 render_toggle()
 
 # ---- PERSONALITY SELECTION ----
@@ -794,8 +707,10 @@ t, meta = get_theme()
 # ---- GAME OVER SCREEN ----
 if st.session_state.game_over:
     st.markdown(f"""
-    <div class="hero-section">
-        <h1>🏁 Debate Over!</h1>
+    <div class="page-header">
+        <span class="page-header-icon">⚖️</span>
+        <h1>KarenTalks</h1>
+        <p class="page-header-subtitle">Debate Over — let's see how you did.</p>
     </div>
     """, unsafe_allow_html=True)
 
@@ -847,14 +762,11 @@ Keep it sharp, helpful, and under 200 words.
     st.stop()
 
 # ---- ACTIVE GAME SCREEN ----
-# Header
 st.markdown(f"""
-<div style="display:flex; align-items:center; gap:0.8rem; margin-bottom:0.2rem;">
-    <span style="font-size:2.5rem; filter:drop-shadow(0 4px 8px rgba(0,0,0,0.4));">{meta['bot_icon']}</span>
-    <div>
-        <h1 style="margin:0;">⚔️ Debate Bot</h1>
-        <span class="personality-badge">{meta['emoji']} {meta['label']} Mode — {meta['tagline']}</span>
-    </div>
+<div class="page-header">
+    <span class="page-header-icon">⚖️</span>
+    <h1>KarenTalks</h1>
+    <p class="page-header-subtitle">{meta['emoji']} {meta['label']} Mode — {meta['tagline']}</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -863,7 +775,6 @@ render_scoreboard(t, meta)
 st.markdown("<hr>", unsafe_allow_html=True)
 
 render_messages(t, meta)
-st.markdown("<div style='height:20px'></div>", unsafe_allow_html=True)
 
 # ---- CHAT INPUT ----
 user_input = st.chat_input(f"Make your argument against {meta['label']}...")
