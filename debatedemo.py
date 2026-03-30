@@ -238,6 +238,18 @@ def inject_css(t, meta):
 <style>
 {google_fonts}
 
+[data-testid="stAppViewContainer"] {{
+    background: linear-gradient(135deg, #0d1b2a, #0a2535, #0d2040);
+}}
+
+[data-testid="stHeader"] {{
+    background: transparent;
+}}
+
+[data-testid="stToolbar"] {{
+    right: 2rem;
+}}
+
 html, body, [class*="css"] {{
     font-family: {t['font_body']};
     background-color: {t['bg']} !important;
