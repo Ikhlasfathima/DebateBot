@@ -10,7 +10,7 @@ model = genai.GenerativeModel('gemini-2.5-flash')
 st.set_page_config(
     page_title="Debate Bot",
     page_icon="⚔️",
-    layout="centered"
+    layout="wide"
 )
 
 # ------------------ SESSION STATE ------------------
@@ -250,6 +250,11 @@ def inject_css(t, meta):
     right: 2rem;
 }}
 
+/* FORCE EVERYTHING DARK */
+html, body, .stApp {{
+    background: linear-gradient(135deg, #0d1b2a 0%, #0a2535 50%, #0d2040 100%) !important;
+}}
+
 html, body, [class*="css"] {{
     font-family: {t['font_body']};
     background-color: {t['bg']} !important;
@@ -259,6 +264,8 @@ html, body, [class*="css"] {{
 .stApp {{
     background: {t['gradient']} !important;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }}
 
 /* Orb background effects */
@@ -292,9 +299,13 @@ html, body, [class*="css"] {{
 
 /* Main content */
 .block-container {{
-    padding: 1rem 1.5rem !important;
-    max-width: 820px !important;
+    padding-bottom: 0rem !important;
+    background: transparent !important;
 }}
+[data-testid="stMain"] {{
+    background: transparent !important;
+}}
+
 
 /* Title */
 h1 {{
@@ -603,6 +614,26 @@ hr {{
 /* Progress bar */
 .stProgress > div > div {{
     background: {t['header_grad']} !important;
+}}
+
+/* FIX BOTTOM WHITE SPACE COMPLETELY */
+[data-testid="stBottomBlockContainer"] {{
+    background: transparent !important;
+}}
+
+section[data-testid="stSidebar"] {{
+    background: transparent !important;
+}}
+
+/* Fix chat input outer wrapper */
+[data-testid="stChatInputContainer"] {{
+    background: transparent !important;
+    border-top: none !important;
+}}
+
+/* Remove extra page padding */
+.main > div {{
+    padding-bottom: 0rem !important;
 }}
 
 </style>
